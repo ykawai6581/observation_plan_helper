@@ -4,7 +4,7 @@ async function main()
 	//アクティブなタブを取得
 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 	//アクティブなタブでJavaScript(parseDOM)を実行
-	await chrome.scripting.executeScript({
+	chrome.scripting.executeScript({
 		target:{tabId:tab.id},
 		func: create_plan
 	}).then(function (r) {
@@ -37,32 +37,34 @@ function create_plan(){
 		param_dict.set(name, value)
 	}
 
-	try {
+	transit = document.getElementsByClassName('text-warning')[0].innerText
 
-		console.log("here")
-		var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
-		console.log("not here")
-		transit_times = Array.from(transit_times).slice(0,3)
-		console.log(transit_times)
-		let transit_times_array = new Array()
-		let transit_date_array = new Array()
+	if (transit != "N/A"){
+		if (transit.slice(0,8) == "There is") {
+			console.log("here")
+			var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
+			console.log("not here")
+			transit_times = Array.from(transit_times).slice(0,3)
+			console.log(transit_times)
+			let transit_times_array = new Array()
+			let transit_date_array = new Array()
 	
-		for (const transit_time of transit_times) { 
-			const value = transit_time.innerText.slice(11,16); 
-			const obsyear = transit_time.innerText.slice(0,4)
-			const obsmonth = transit_time.innerText.slice(5,7)
-			const obsdate = transit_time.innerText.slice(8,10)
-			console.log(obsyear,obsmonth,obsdate)
-			console.log(value)
-			transit_times_array.push(value)
-			transit_date_array.push({year:obsyear,month:obsmonth,day:obsdate})
+			for (const transit_time of transit_times) { 
+				const value = transit_time.innerText.slice(11,16); 
+				const obsyear = transit_time.innerText.slice(0,4)
+				const obsmonth = transit_time.innerText.slice(5,7)
+				const obsdate = transit_time.innerText.slice(8,10)
+				console.log(obsyear,obsmonth,obsdate)
+				console.log(value)
+				transit_times_array.push(value)
+				transit_date_array.push({year:obsyear,month:obsmonth,day:obsdate})
+			}
+			const transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
+	
+		}else{
+			const transit_begin_end = ``
 		}
-		const transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
-
-		console.log(transit_date_array[0])
-
-	} catch (e) {
-		console.log("error caught")
+	} else {
 		const transit_begin_end = ``
 	}
 
@@ -72,7 +74,6 @@ function create_plan(){
 	const depth =  `Depth: ${param_dict.get('Depth')}`
 	const vmag = `Vmag: ${param_dict.get('V mag')}`
 	const comments = `Comments: `
-
 
 	var plan_content = 
 `
