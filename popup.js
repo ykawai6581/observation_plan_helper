@@ -38,8 +38,10 @@ function create_plan(){
 	}
 
 	try {
-		var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
 
+		console.log("here")
+		var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
+		console.log("not here")
 		transit_times = Array.from(transit_times).slice(0,3)
 		console.log(transit_times)
 		let transit_times_array = new Array()
