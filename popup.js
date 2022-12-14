@@ -15,7 +15,7 @@ async function main()
 	});
 }
 
-async function create_plan(){
+function create_plan(){
 
 	const target = document.getElementsByClassName('grid-item grid-item-content')[0].getElementsByTagName('h1')[0].innerText
 
