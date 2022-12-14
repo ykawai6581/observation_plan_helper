@@ -61,6 +61,7 @@ async function create_plan(){
 		console.log(transit_date_array[0])
 
 	} catch (e) {
+		console.log("error caught")
 		const transit_begin_end = ``
 	}
 
