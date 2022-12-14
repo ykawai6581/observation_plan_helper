@@ -78,10 +78,12 @@ ${comments}
 `
 		}else{
 			console.log("wrong date")
+			transit_begin_end = "Transit times:"
 			var plan_content = 
 `
 ${target_priority} 
 ${ra_dec} 
+${transit_begin_end}
 ${obs_times} 
 ${depth}
 ${vmag}
@@ -91,10 +93,12 @@ ${comments}
 `		} 
 	} else if (wrong_date != "N/A"){
 		console.log("wrong date")
+		transit_begin_end = "Transit times:"
 		var plan_content = 
 `
 ${target_priority} 
 ${ra_dec} 
+${transit_begin_end}
 ${obs_times} 
 ${depth}
 ${vmag}
@@ -103,10 +107,11 @@ ${comments}
 ** For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit **
 `
 	} else {
-		console.log("snapshot")
+		console.log("filler")
+		type = document.getElementsByClassName('label label-success label-lg')[0].innerText.slice(8,)
 		var plan_content = 
 `
-${target_priority} 
+${target_priority} - ${type}
 ${ra_dec} 
 ${obs_times} 
 ${depth}
