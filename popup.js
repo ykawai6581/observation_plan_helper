@@ -38,6 +38,7 @@ function create_plan(){
 	}
 
 	transit = document.getElementsByClassName('text-warning')[0].innerText
+	wrong_date = document.getElementsByClassName('text-warning')[document.getElementsByClassName('text-warning').length - 1].innerText
 
 	const target_priority = `${target} (Priority ${param_dict.get('Priority')})`
 	const ra_dec = `RA, Dec:  ${param_dict.get('RA')} ${param_dict.get('Dec')}`
@@ -76,7 +77,7 @@ ${vmag}
 ${comments}
 `
 		}else{
-			console.log("no transit tonight")
+			console.log("wrong date")
 			var plan_content = 
 `
 ${target_priority} 
@@ -87,9 +88,22 @@ ${vmag}
 ${comments}
 
 ** For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit **
-`		}
+`		} 
+	} else if (wrong_date != "N/A"){
+		console.log("wrong date")
+		var plan_content = 
+`
+${target_priority} 
+${ra_dec} 
+${obs_times} 
+${depth}
+${vmag}
+${comments}
+
+** For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit **
+`
 	} else {
-		console.log("snapshot target")
+		console.log("snapshot")
 		var plan_content = 
 `
 ${target_priority} 
