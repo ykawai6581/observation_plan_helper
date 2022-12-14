@@ -1,4 +1,7 @@
 # observation_plan_helper
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 observation planning tool for MuSCAT2
 
 this is a google chrome extension designed for helping generate MuSCAT2 observation plans. <br/> 
