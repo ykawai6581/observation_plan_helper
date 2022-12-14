@@ -64,9 +64,11 @@ function create_plan(){
 			const transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
 	
 		}else{
+			console.log("no transit tonight")
 			const transit_begin_end = ``
 		}
 	} else {
+		console.log("snapshot target")
 		const transit_begin_end = ``
 	}
 
