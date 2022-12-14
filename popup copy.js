@@ -74,41 +74,4 @@ ${vmag}
 ${comments}
 `
 	
-	return [plan_content, target];
 }
-
-$( function() {
-    $('#ajax-button').click(
-    function() {
-        var hostUrl= 'http://localhost:8000';
-        var param1 = 1;
-        var param2 = 10;
-        $.ajax({
-            url: hostUrl,
-            type:'POST',
-            dataType: 'json',
-            data : {
-				"action": showImage,
-				"form[mode]": 1,
-				"form[day]": 29,
-				"form[month]": 11,
-				"form[year]": 2022,
-				"form[obs_name]": "Roque de los Muchachos Observatory (La Palma, Spain)",
-
-				"form[coordlist]": coord,
-				"coordfile": "(binary)",
-				"form[paramdist]": 2,
-				"form[minangle]": 10,
-				"form[format]": "gif",
-				"submit": " Retrieve ",
-				}
-				,
-            timeout:3000,
-        }).done(function(data) {
-                          alert("ok");
-        }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
-                         alert("error");
-        })
-    });
-} );
-
