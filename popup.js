@@ -6,7 +6,7 @@ async function main()
 	//アクティブなタブでJavaScript(parseDOM)を実行
 	chrome.scripting.executeScript({
 		target:{tabId:tab.id},
-		func:create_plan
+		func: create_plan
 	}).then(function (r) {
 		//実行結果をポップアップウィンドウへ表示
 		document.getElementById('result').innerHTML = r[0].result[0];
@@ -14,10 +14,9 @@ async function main()
 
 	});
 }
-function create_plan(){
+async function create_plan(){
 
 	const target = document.getElementsByClassName('grid-item grid-item-content')[0].getElementsByTagName('h1')[0].innerText
-
 
 	var params = document.getElementsByClassName('table code')[0].childNodes[3].children
 	var params_sg1 = document.getElementsByClassName('table code')[1].childNodes[3].children
