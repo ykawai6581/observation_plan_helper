@@ -39,6 +39,8 @@ function create_plan(){
 
 	transit = document.getElementsByClassName('text-warning')[0].innerText
 
+	console.log(transit)
+
 	if (transit != "N/A"){
 		if (transit.slice(0,8) == "There is") {
 			console.log("here")
