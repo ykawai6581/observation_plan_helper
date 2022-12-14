@@ -89,6 +89,8 @@ ${depth}
 ${vmag}
 ${comments}
 
+
+____________________Transit not seen in the altitude curve below____________________
 ** For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit **
 `		} 
 	} else if (wrong_date != "N/A"){
@@ -104,6 +106,7 @@ ${depth}
 ${vmag}
 ${comments}
 
+____________________Transit not seen in the altitude curve below____________________
 ** For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit **
 `
 	} else {
