@@ -4,7 +4,7 @@ async function main()
 	//アクティブなタブを取得
 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 	//アクティブなタブでJavaScript(parseDOM)を実行
-	chrome.scripting.executeScript({
+	await chrome.scripting.executeScript({
 		target:{tabId:tab.id},
 		func: create_plan
 	}).then(function (r) {
@@ -84,5 +84,6 @@ ${depth}
 ${vmag}
 ${comments}
 `
+	return [plan_content, target];
 
 }
