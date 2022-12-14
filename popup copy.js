@@ -14,7 +14,7 @@ async function main()
 
 	});
 }
-function create_plan(){
+async function create_plan(){
 
 	const target = document.getElementsByClassName('grid-item grid-item-content')[0].getElementsByTagName('h1')[0].innerText
 
@@ -37,22 +37,35 @@ function create_plan(){
 		param_dict.set(name, value)
 	}
 
-	var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
-	console.log(transit_times)
-	transit_times = Array.from(transit_times).slice(0,3)
-	console.log(transit_times)
-	let transit_times_array = new Array()
+	try {
 
-	for (const transit_time of transit_times) { 
-		const value = transit_time.innerText.slice(11,16); 
-		const obsyear = transit_time.innerText.slice(0,5)
-		const obsmonth = transit_time.innerText.slice(6,8)
-		const obsdate = transit_time.innerText.slice(9,10)
-		console.log(obsyear,obsmonth,obsdate)
-		console.log(value)
-		transit_times_array.push(value)
+		console.log("here")
+		var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
+		console.log("not here")
+		transit_times = Array.from(transit_times).slice(0,3)
+		console.log(transit_times)
+		let transit_times_array = new Array()
+		let transit_date_array = new Array()
+	
+		for (const transit_time of transit_times) { 
+			const value = transit_time.innerText.slice(11,16); 
+			const obsyear = transit_time.innerText.slice(0,4)
+			const obsmonth = transit_time.innerText.slice(5,7)
+			const obsdate = transit_time.innerText.slice(8,10)
+			console.log(obsyear,obsmonth,obsdate)
+			console.log(value)
+			transit_times_array.push(value)
+			transit_date_array.push({year:obsyear,month:obsmonth,day:obsdate})
+		}
+		const transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
+
+		console.log(transit_date_array[0])
+
+	} catch (e) {
+		console.log("error caught")
+		const transit_begin_end = ``
 	}
-
+	
 	const target_priority = `${target} (Priority ${param_dict.get('Priority')})`
 	const ra_dec = `RA, Dec:  ${param_dict.get('RA')} ${param_dict.get('Dec')}`
 	const transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
@@ -74,4 +87,5 @@ ${vmag}
 ${comments}
 `
 	
+	return [plan_content, target];
 }
