@@ -27,3 +27,7 @@ if it does not contain transit times, it is either because <br/>
 
 #### case 2:
 ![snapshot](/img/snapshot.png)
+
+Author: Yugo Kawai (The University of Tokyo) (Email: yugo6581 @ g.ecc.u-tokyo.ac.jp)
+
+Last update: Dec 14, 2022
