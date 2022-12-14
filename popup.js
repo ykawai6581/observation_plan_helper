@@ -37,8 +37,7 @@ function create_plan(){
 		param_dict.set(name, value)
 	}
 
-	transit = document.getElementsByClassName('text-warning')[0].innerText
-	wrong_date = document.getElementsByClassName('text-warning')[document.getElementsByClassName('text-warning').length - 1].innerText
+	transit = document.getElementsByClassName('text-warning')[document.getElementsByClassName('text-warning').length - 1].innerText.slice(0,8)
 
 	const target_priority = `${target} (Priority ${param_dict.get('Priority')})`
 	const ra_dec = `RA, Dec:  ${param_dict.get('RA')} ${param_dict.get('Dec')}`
@@ -47,26 +46,25 @@ function create_plan(){
 	const vmag = `Vmag: ${param_dict.get('V mag')}`
 	const comments = `Comments: `
 
-	if (transit != "N/A"){
-		if (transit.slice(0,8) == "There is") {
-			var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
-			transit_times = Array.from(transit_times).slice(0,3)
-			console.log(transit_times)
-			let transit_times_array = new Array()
-			let transit_date_array = new Array()
+	if (transit == "There is"){
+		var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
+		transit_times = Array.from(transit_times).slice(0,3)
+		console.log(transit_times)
+		let transit_times_array = new Array()
+		let transit_date_array = new Array()
 	
-			for (const transit_time of transit_times) { 
-				const value = transit_time.innerText.slice(11,16); 
-				const obsyear = transit_time.innerText.slice(0,4)
-				const obsmonth = transit_time.innerText.slice(5,7)
-				const obsdate = transit_time.innerText.slice(8,10)
-				console.log(obsyear,obsmonth,obsdate)
-				console.log(value)
-				transit_times_array.push(value)
-				transit_date_array.push({year:obsyear,month:obsmonth,day:obsdate})
-			}
-			transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
-			var plan_content = 
+		for (const transit_time of transit_times) { 
+			const value = transit_time.innerText.slice(11,16); 
+			const obsyear = transit_time.innerText.slice(0,4)
+			const obsmonth = transit_time.innerText.slice(5,7)
+			const obsdate = transit_time.innerText.slice(8,10)
+			console.log(obsyear,obsmonth,obsdate)
+			console.log(value)
+			transit_times_array.push(value)
+			transit_date_array.push({year:obsyear,month:obsmonth,day:obsdate})
+		}
+		transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
+		var plan_content = 
 `
 ${target_priority} 
 ${ra_dec} 
@@ -76,24 +74,7 @@ ${depth}
 ${vmag}
 ${comments}
 `
-		}else{
-			console.log("wrong date")
-			transit_begin_end = "Transit times:"
-			var plan_content = 
-`
-${target_priority} 
-${ra_dec} 
-${transit_begin_end}
-${obs_times} 
-${depth}
-${vmag}
-${comments}
-
-
-####  Transit not seen in altitude curve below  ####
-For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit
-`		} 
-	} else if (wrong_date != "N/A"){
+	}else if (transit == "There ar"){
 		console.log("wrong date")
 		transit_begin_end = "Transit times:"
 		var plan_content = 
@@ -106,10 +87,10 @@ ${depth}
 ${vmag}
 ${comments}
 
+
 ####  Transit not seen in altitude curve below  ####
 For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit
-`
-	} else {
+`	} else {
 		console.log("filler")
 		type = document.getElementsByClassName('label label-success label-lg')[0].innerText.slice(8,)
 		var plan_content = 
