@@ -9,6 +9,7 @@ async function main()
 		func:create_plan
 	}).then(function (r) {
 		//実行結果をポップアップウィンドウへ表示
+		console.log(r[0].result[0])
 		document.getElementById('result').innerHTML = r[0].result[0];
 		document.getElementById('title').innerText = `Observation plan for ${r[0].result[1]}`;
 
@@ -65,7 +66,7 @@ async function create_plan(){
 		console.log("error caught")
 		const transit_begin_end = ``
 	}
-	
+
 	const target_priority = `${target} (Priority ${param_dict.get('Priority')})`
 	const ra_dec = `RA, Dec:  ${param_dict.get('RA')} ${param_dict.get('Dec')}`
 	const transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
