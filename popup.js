@@ -39,13 +39,16 @@ function create_plan(){
 
 	transit = document.getElementsByClassName('text-warning')[0].innerText
 
-	console.log(transit)
+	const target_priority = `${target} (Priority ${param_dict.get('Priority')})`
+	const ra_dec = `RA, Dec:  ${param_dict.get('RA')} ${param_dict.get('Dec')}`
+	const obs_times = `Obs times: `
+	const depth =  `Depth: ${param_dict.get('Depth')}`
+	const vmag = `Vmag: ${param_dict.get('V mag')}`
+	const comments = `Comments: `
 
 	if (transit != "N/A"){
 		if (transit.slice(0,8) == "There is") {
-			console.log("here")
 			var transit_times = document.querySelector('[title="Observable transit tonight"]').getElementsByTagName('td')
-			console.log("not here")
 			transit_times = Array.from(transit_times).slice(0,3)
 			console.log(transit_times)
 			let transit_times_array = new Array()
@@ -62,33 +65,42 @@ function create_plan(){
 				transit_date_array.push({year:obsyear,month:obsmonth,day:obsdate})
 			}
 			transit_begin_end = `Transit times: ${transit_times_array[0]} - ${transit_times_array[2]} UT (${param_dict.get('Acc period error').slice(0,7)})`
-	
-		}else{
-			console.log("no transit tonight")
-			transit_begin_end = ``
-		}
-	} else {
-		console.log("snapshot target")
-		transit_begin_end = ``
-	}
-
-	const target_priority = `${target} (Priority ${param_dict.get('Priority')})`
-	const ra_dec = `RA, Dec:  ${param_dict.get('RA')} ${param_dict.get('Dec')}`
-	const obs_times = `Obs times: `
-	const depth =  `Depth: ${param_dict.get('Depth')}`
-	const vmag = `Vmag: ${param_dict.get('V mag')}`
-	const comments = `Comments: `
-
-	var plan_content = 
+			var plan_content = 
 `
 ${target_priority} 
 ${ra_dec} 
-${transit_begin_end} 
+${transit_begin_end}
 ${obs_times} 
 ${depth}
 ${vmag}
 ${comments}
 `
+		}else{
+			console.log("no transit tonight")
+			var plan_content = 
+`
+${target_priority} 
+${ra_dec} 
+${obs_times} 
+${depth}
+${vmag}
+${comments}
+
+** For the transit time to be displayed, please make sure that the altitude curve on the page is for the day of the transit **
+`		}
+	} else {
+		console.log("snapshot target")
+		var plan_content = 
+`
+${target_priority} 
+${ra_dec} 
+${obs_times} 
+${depth}
+${vmag}
+${comments}
+`
+	}
+
 	return [plan_content, target];
 
 }
